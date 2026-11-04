@@ -80,10 +80,10 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: contain;
-      padding-top: calc(var(--safe-top) + 16px);
+      padding-top: calc(var(--safe-top) + 12px);
       padding-left: 12px;
       padding-right: 12px;
-      padding-bottom: calc(170px + var(--safe-bottom));
+      padding-bottom: 140px;
       position: relative;
       z-index: 1;
     }
@@ -294,22 +294,21 @@
       color: var(--a5);
       flex-shrink: 0;
     }
-    .hist-arrow.open { transform: rotate(180deg); }
-
-    /* Barra de navegación adaptada a iPhone 14 Pro Max y Android */
+    /* Barra de navegación compacta al ras inferior para iPhone 14 Pro Max y Android */
     .nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: calc(64px + max(14px, var(--safe-bottom)));
+      height: 58px;
       background: var(--nav-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
-      padding: 8px 0 max(14px, var(--safe-bottom));
+      align-items: center;
+      padding: 4px 0 8px;
       z-index: 100;
       transition: background .3s;
     }
@@ -317,17 +316,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       color: var(--sub);
       font-size: 10px;
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
-      gap: 3px;
+      gap: 2px;
       padding: 2px 16px;
       transition: color .2s;
     }
     .ni.on { color: var(--a5); }
-    .ni svg { width: 26px; height: 26px; }
+    .ni svg { width: 23px; height: 23px; }
     .ni .dot {
       width: 4px;
       height: 4px;
@@ -415,16 +415,16 @@
       margin: 10px 0 6px;
       border-radius: 4px;
     }
-    /* Barra de Totales acoplada exactamente encima de la barra de navegación */
+    /* Barra de Totales acoplada exactamente encima de la barra de navegación compacta */
     .foot {
       position: fixed;
-      bottom: calc(64px + max(14px, var(--safe-bottom)));
+      bottom: 58px;
       left: 0;
       right: 0;
       background: var(--foot-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 12px 16px;
+      padding: 9px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -485,10 +485,10 @@
     /* Botón Flotante Movible de Asistente de Voz */
     .fab-voice {
       position: fixed;
-      bottom: calc(146px + var(--safe-bottom));
+      bottom: 126px;
       right: 18px;
-      width: 64px;
-      height: 64px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: linear-gradient(135deg, #7209b7, #00b4d8);
       border: 2.5px solid rgba(255,255,255,0.6);
@@ -497,7 +497,7 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 28px;
+      font-size: 26px;
       cursor: pointer;
       z-index: 95;
       touch-action: none;
@@ -1104,7 +1104,7 @@
       try { savedPos = JSON.parse(localStorage.getItem('mm_fab_pos')); } catch(e){}
       if (savedPos && typeof savedPos.left === 'number' && typeof savedPos.top === 'number') {
         fab.style.left = Math.min(Math.max(8, savedPos.left), window.innerWidth - 70) + 'px';
-        fab.style.top = Math.min(Math.max(minSafeTop, savedPos.top), window.innerHeight - 120) + 'px';
+        fab.style.top = Math.min(Math.max(minSafeTop, savedPos.top), window.innerHeight - 90) + 'px';
         fab.style.right = 'auto';
         fab.style.bottom = 'auto';
       }
@@ -1127,7 +1127,7 @@
         if (hasMoved) {
           if (e.cancelable) e.preventDefault();
           var nl = Math.max(6, Math.min(initialLeft + dx, window.innerWidth - fab.offsetWidth - 6));
-          var nt = Math.max(minSafeTop, Math.min(initialTop + dy, window.innerHeight - fab.offsetHeight - 110));
+          var nt = Math.max(minSafeTop, Math.min(initialTop + dy, window.innerHeight - fab.offsetHeight - 75));
           fab.style.left = nl + 'px';
           fab.style.top = nt + 'px';
           fab.style.right = 'auto';
@@ -1141,7 +1141,7 @@
         if (hasMoved) {
           var rect = fab.getBoundingClientRect();
           var snapLeft = (rect.left + rect.width / 2 < window.innerWidth / 2) ? 12 : (window.innerWidth - rect.width - 12);
-          var finalTop = Math.max(minSafeTop, Math.min(rect.top, window.innerHeight - fab.offsetHeight - 110));
+          var finalTop = Math.max(minSafeTop, Math.min(rect.top, window.innerHeight - fab.offsetHeight - 75));
           fab.style.left = snapLeft + 'px';
           fab.style.top = finalTop + 'px';
           localStorage.setItem('mm_fab_pos', JSON.stringify({ left: snapLeft, top: finalTop }));
